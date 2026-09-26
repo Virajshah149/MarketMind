@@ -9,6 +9,7 @@ from app.models.company import Company
 from app.models.relationship import Relationship
 from app.models.evidence import Evidence
 from app.models.event import Event
+from app.models.news import News
 
 def seed_companies():
     Base.metadata.create_all(bind=engine)
