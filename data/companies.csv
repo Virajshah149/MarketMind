@@ -1,0 +1,6 @@
+company_id,company_name,legal_name,ticker,exchange,sector,industry
+CMP001,Tata Steel,Tata Steel Limited,TATASTEEL,NSE,Metals,Steel
+CMP002,Bharat Forge,Bharat Forge Limited,BHARATFORG,NSE,Automobile Components,Auto Components
+CMP003,Maruti Suzuki,Maruti Suzuki India Limited,MARUTI,NSE,Automobile,Passenger Vehicles
+CMP004,Reliance Industries,Reliance Industries Limited,RELIANCE,NSE,Energy,Conglomerate
+CMP005,Tata Motors,Tata Motors Limited,TATAMOTORS,BSEM,Automobile,Automobiles
