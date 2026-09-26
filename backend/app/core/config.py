@@ -10,7 +10,11 @@ class Settings(BaseSettings):
     app_name: str = "MarketMind API"
     app_version: str = "0.1.0"
     environment: str = "development"
+
     database_url: str
+
+    gemini_api_key: str
+    gemini_model: str = "gemini-3.8-flash"
 
     model_config = SettingsConfigDict(
         env_file=PROJECT_ROOT / ".env",

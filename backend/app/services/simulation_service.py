@@ -162,6 +162,7 @@ def simulate_shock(
                 {
                     "source_company_id": current_company,
                     "target_company_id": target,
+                     "relationship_id": relationship.id,
                     "relationship_type": relationship.relationship_type,
                     "strength": relationship.strength,
                     "dependency_percentage": relationship.dependency_percentage,

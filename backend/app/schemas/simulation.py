@@ -44,6 +44,7 @@ class SimulationNode(BaseModel):
 class SimulationEdge(BaseModel):
     source_company_id: str
     target_company_id: str
+    relationship_id: int
     relationship_type: str
     strength: float
     dependency_percentage: float | None
