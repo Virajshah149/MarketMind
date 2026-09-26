@@ -1,4 +1,9 @@
+import { useState } from "react"
+import CompanySearch from "../components/CompanySearch"
+
 function Home() {
+  const [selectedCompany, setSelectedCompany] = useState(null)
+
   return (
     <main className="mx-auto max-w-7xl px-6">
 
@@ -20,24 +25,51 @@ function Home() {
           the network.
         </p>
 
-        {/* Search */}
+        {/* Company Search */}
         <div className="mt-10 w-full max-w-xl">
 
-          <div className="flex items-center rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 shadow-lg">
+          <CompanySearch
+            onCompanySelect={setSelectedCompany}
+          />
 
-            <span className="mr-3 text-slate-500">
-              🔍
-            </span>
+          {/* Selected company */}
+          {selectedCompany && (
+            <div className="mt-4 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-5 py-4 text-left">
 
-            <input
-              type="text"
-              placeholder="Search for a company..."
-              className="w-full bg-transparent text-white outline-none placeholder:text-slate-500"
-            />
+              <p className="text-sm text-cyan-300">
+                Selected company
+              </p>
 
-          </div>
+              <div className="mt-2 flex items-center justify-between">
 
-          <button className="mt-4 rounded-xl bg-cyan-500 px-8 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400">
+                <div>
+                  <p className="font-semibold text-white">
+                    {selectedCompany.company_name}
+                  </p>
+
+                  <p className="text-sm text-slate-400">
+                    {selectedCompany.exchange}: {selectedCompany.ticker}
+                  </p>
+
+                  <p className="mt-1 text-xs text-slate-500">
+                    {selectedCompany.sector} · {selectedCompany.industry}
+                  </p>
+                </div>
+
+                <span className="rounded-lg bg-cyan-400/10 px-3 py-1 text-sm text-cyan-300">
+                  Selected
+                </span>
+
+              </div>
+
+            </div>
+          )}
+
+          {/* Simulate button */}
+          <button
+            disabled={!selectedCompany}
+            className="mt-4 rounded-xl bg-cyan-500 px-8 py-3 font-semibold text-slate-950 transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-40"
+          >
             Simulate a Shock
           </button>
 
