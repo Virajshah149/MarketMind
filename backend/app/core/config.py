@@ -16,6 +16,10 @@ class Settings(BaseSettings):
     gemini_api_key: str
     gemini_model: str = "gemini-3.8-flash"
 
+
+    news_api_key: str
+    news_fetch_interval_minutes: int = 60
+
     model_config = SettingsConfigDict(
         env_file=PROJECT_ROOT / ".env",
         env_file_encoding="utf-8",
