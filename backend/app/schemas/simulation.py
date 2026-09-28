@@ -22,13 +22,7 @@ class SimulationRequest(BaseModel):
     )
 
     minimum_impact: float = Field(
-        default=0.01,
-        ge=0,
-        le=1,
-    )
-
-    hop_decay: float = Field(
-        default=0.8,
+        default=0.0001,
         ge=0,
         le=1,
     )

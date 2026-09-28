@@ -34,7 +34,6 @@ def run_simulation(
             shock_strength=request.shock_strength,
             max_hops=request.max_hops,
             minimum_impact=request.minimum_impact,
-            hop_decay=request.hop_decay,
         )
 
     except ValueError as error:

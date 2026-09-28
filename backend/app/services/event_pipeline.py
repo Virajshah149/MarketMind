@@ -108,7 +108,6 @@ def process_news_event(
         shock_strength=news.severity,
         max_hops=4,
         minimum_impact=0.01,
-        hop_decay=0.8,
     )
 
     # --------------------------------------------------
