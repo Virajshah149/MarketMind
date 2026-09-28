@@ -19,9 +19,7 @@ def process_news_event(
     # --------------------------------------------------
 
     news = db.scalar(
-        select(News).where(
-            News.id == news_id
-        )
+        select(News).where(News.id == news_id)
     )
 
     if news is None:
@@ -66,14 +64,17 @@ def process_news_event(
     # 3. Create Event
     # --------------------------------------------------
 
-    existing_event = db.scalar(
-        select(Event).where(
-            Event.source_url == news.source_url
+    existing_event = (
+        db.scalar(
+            select(Event).where(
+                Event.source_url == news.source_url
+            )
         )
-    ) if news.source_url else None
+        if news.source_url
+        else None
+    )
 
     if existing_event is None:
-
         event = Event(
             event_id=f"EVT-{uuid4().hex[:10].upper()}",
             company_id=news.company_id,
@@ -119,9 +120,13 @@ def process_news_event(
         news_id=news.id,
         source_company_id=news.company_id,
         shock_type=shock_type,
-        nodes=simulation["nodes"],
-        edges=simulation["edges"],
+        nodes=simulation.nodes,
+        edges=simulation.edges,
     )
+
+    # --------------------------------------------------
+    # 6. Mark news as processed
+    # --------------------------------------------------
 
     news.processing_status = "processed"
 
