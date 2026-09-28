@@ -6,11 +6,13 @@ from sqlalchemy import select
 from app.db.base import Base
 from app.db.session import SessionLocal, engine
 from app.models.company import Company
-from app.models.relationship import Relationship
-from app.models.evidence import Evidence
-from app.models.event import Event
-from app.models.news import News
-from app.models.impact import Impact
+
+
+CSV_PATH = (
+    Path(__file__).resolve().parents[3]
+    / "data"
+    / "companies.csv"
+)
 
 
 def seed_companies():
@@ -19,114 +21,52 @@ def seed_companies():
     db = SessionLocal()
 
     try:
-        csv_path = (
-            Path(__file__).resolve().parents[3]
-            / "data"
-            / "companies.csv"
-        )
-
-        with csv_path.open(
+        with CSV_PATH.open(
             "r",
             encoding="utf-8",
             newline="",
         ) as file:
             reader = csv.DictReader(file)
 
+            inserted = 0
+            updated = 0
+
             for row in reader:
-                existing = db.scalar(
+                company = db.scalar(
                     select(Company).where(
                         Company.company_id == row["company_id"]
                     )
                 )
 
-                if existing:
-                    continue
+                if company is None:
+                    company = Company(
+                        company_id=row["company_id"],
+                        company_name=row["company_name"],
+                        legal_name=row["legal_name"],
+                        ticker=row["ticker"],
+                        exchange=row["exchange"],
+                        sector=row["sector"],
+                        industry=row["industry"],
+                    )
 
-                company = Company(
-                    company_id=row["company_id"],
-                    company_name=row["company_name"],
-                    legal_name=row["legal_name"],
-                    ticker=row["ticker"],
-                    exchange=row["exchange"],
-                    sector=row["sector"],
-                    industry=row["industry"],
-                )
+                    db.add(company)
+                    inserted += 1
 
-                db.add(company)
+                else:
+                    company.company_name = row["company_name"]
+                    company.legal_name = row["legal_name"]
+                    company.ticker = row["ticker"]
+                    company.exchange = row["exchange"]
+                    company.sector = row["sector"]
+                    company.industry = row["industry"]
 
-        db.commit()
+                    updated += 1
 
-        print("Company seed completed.")
+            db.commit()
 
-    finally:
-        db.close()
-
-
-def seed_relationships():
-    Base.metadata.create_all(bind=engine)
-
-    db = SessionLocal()
-
-    relationships = [
-        {
-            "source_company_id": "CMP001",
-            "target_company_id": "CMP002",
-            "relationship_type": "supplier",
-            "strength": 0.8,
-            "dependency_percentage": 0.30,
-            "commodity": "Steel",
-            "evidence_text": "Prototype relationship for development testing.",
-            "evidence_source": "Prototype dataset",
-            "confidence_score": 0.8,
-        },
-        {
-            "source_company_id": "CMP002",
-            "target_company_id": "CMP003",
-            "relationship_type": "supplier",
-            "strength": 0.7,
-            "dependency_percentage": 0.20,
-            "commodity": "Auto Components",
-            "evidence_text": "Prototype relationship for development testing.",
-            "evidence_source": "Prototype dataset",
-            "confidence_score": 0.7,
-        },
-        {
-            "source_company_id": "CMP003",
-            "target_company_id": "CMP005",
-            "relationship_type": "supplier",
-            "strength": 0.6,
-            "dependency_percentage": 0.15,
-            "commodity": "Passenger Vehicles",
-            "evidence_text": "Prototype relationship for development testing.",
-            "evidence_source": "Prototype dataset",
-            "confidence_score": 0.6,
-        },
-    ]
-
-    try:
-        for row in relationships:
-
-            existing = db.scalar(
-                select(Relationship).where(
-                    Relationship.source_company_id
-                    == row["source_company_id"],
-                    Relationship.target_company_id
-                    == row["target_company_id"],
-                    Relationship.relationship_type
-                    == row["relationship_type"],
-                )
-            )
-
-            if existing:
-                continue
-
-            relationship = Relationship(**row)
-
-            db.add(relationship)
-
-        db.commit()
-
-        print("Relationship seed completed.")
+            print(f"Companies inserted: {inserted}")
+            print(f"Companies updated: {updated}")
+            print("Company import completed.")
 
     finally:
         db.close()
@@ -134,4 +74,3 @@ def seed_relationships():
 
 if __name__ == "__main__":
     seed_companies()
-    seed_relationships()
