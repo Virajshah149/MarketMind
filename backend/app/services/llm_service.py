@@ -1,11 +1,10 @@
 import json
 
 from google import genai
+from google.genai.errors import ClientError
 
 from app.core.config import settings
-from app.schemas.news_analysis import (
-    BatchNewsAnalysis,
-)
+from app.schemas.news_analysis import BatchNewsAnalysis
 
 
 client = genai.Client(
@@ -13,14 +12,13 @@ client = genai.Client(
 )
 
 
-def analyze_news_batch(
-    articles: list[dict],
-) -> BatchNewsAnalysis:
+def analyze_news_batch(articles: list[dict]) -> BatchNewsAnalysis:
+    """
+    Analyze multiple news articles in ONE Gemini request.
+    """
 
     if not articles:
-        return BatchNewsAnalysis(
-            analyses=[]
-        )
+        return BatchNewsAnalysis(analyses=[])
 
     article_blocks = []
 
@@ -65,51 +63,75 @@ Rules:
 - severity must be between 0 and 1.
 - confidence must be between 0 and 1.
 - summary must be one short sentence.
-- If the article is only market commentary and contains no meaningful company event, use:
-  event_type = "market_commentary"
-  sentiment = "neutral"
-  severity = 0
-  confidence = 1
-  company_id = null
+
+If the article is only market commentary:
+- event_type = "market_commentary"
+- sentiment = "neutral"
+- severity = 0
+- confidence = 1
+- company_id = null
 
 ARTICLES:
+
 {"".join(article_blocks)}
 """
 
-    response = client.models.generate_content(
-        model=settings.gemini_model,
-        contents=prompt,
-        config={
-            "response_mime_type": "application/json",
-            "response_schema": BatchNewsAnalysis,
-        },
-    )
-
-    if not response.text:
-        raise ValueError(
-            "Gemini returned an empty response"
+    try:
+        response = client.models.generate_content(
+            model=settings.gemini_model,
+            contents=prompt,
+            config={
+                "response_mime_type": "application/json",
+                "response_schema": BatchNewsAnalysis,
+            },
         )
 
-    data = json.loads(response.text)
+    except ClientError as error:
+
+        # Gemini quota exceeded
+        if error.code == 429:
+            raise RuntimeError(
+                "Gemini quota exceeded. "
+                "Switch LLM_PROVIDER to mock mode or wait for quota reset."
+            ) from error
+
+        raise
+
+    if not response.text:
+        raise RuntimeError(
+            "Gemini returned an empty response."
+        )
+
+    try:
+        data = json.loads(response.text)
+
+    except json.JSONDecodeError as error:
+        raise RuntimeError(
+            "Gemini returned invalid JSON."
+        ) from error
 
     return BatchNewsAnalysis.model_validate(data)
 
 
-# Keep the old function available for the existing
-# single-news endpoint.
 def analyze_news(
     news_title: str,
     news_content: str,
     companies: list[dict],
 ):
+    """
+    Analyze one article using the same batch pipeline.
+    """
+
     article = {
         "news_id": 0,
         "title": news_title,
         "content": news_content,
         "companies": "\n".join(
-            f"{company['company_id']} | "
-            f"{company['company_name']} | "
-            f"{company['ticker']}"
+            (
+                f"{company['company_id']} | "
+                f"{company['company_name']} | "
+                f"{company['ticker']}"
+            )
             for company in companies
         ),
     }
@@ -117,8 +139,8 @@ def analyze_news(
     result = analyze_news_batch([article])
 
     if not result.analyses:
-        raise ValueError(
-            "Gemini returned no analysis"
+        raise RuntimeError(
+            "Gemini returned no analysis."
         )
 
     return result.analyses[0]
