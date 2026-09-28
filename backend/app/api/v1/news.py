@@ -15,7 +15,7 @@ from app.services.news_service import (
     get_news_item,
 )
 
-from app.services.news_analyzer import analyze_news_item
+
 from app.services.event_pipeline import process_news_event
 
 router = APIRouter(

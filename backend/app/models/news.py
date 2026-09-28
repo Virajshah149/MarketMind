@@ -77,6 +77,18 @@ class News(Base):
         nullable=False,
     )
 
+    created_by: Mapped[str] = mapped_column(
+        String(50),
+        default="system",
+        nullable=False,
+    )
+
+    source_type: Mapped[str] = mapped_column(
+        String(50),
+        default="automatic",
+        nullable=False,
+    )
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,

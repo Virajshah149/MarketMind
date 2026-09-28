@@ -4,7 +4,10 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class NewsCreate(BaseModel):
-    title: str = Field(min_length=1, max_length=500)
+    title: str = Field(
+        min_length=1,
+        max_length=500,
+    )
 
     content: str = Field(
         min_length=10,
@@ -19,8 +22,10 @@ class NewsResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
+
     title: str
     content: str
+
     source_name: str | None
     source_url: str | None
     published_at: datetime | None
@@ -33,6 +38,10 @@ class NewsResponse(BaseModel):
     summary: str | None
 
     processing_status: str
+
+    created_by: str
+    source_type: str
+
     created_at: datetime
 
 
