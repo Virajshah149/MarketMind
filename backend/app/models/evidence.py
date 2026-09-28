@@ -18,7 +18,7 @@ class Evidence(Base):
     )
 
     evidence_type: Mapped[str] = mapped_column(
-        String(50),
+        String(100),
         nullable=False,
     )
 
