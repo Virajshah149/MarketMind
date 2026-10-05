@@ -247,15 +247,15 @@ function DependencyGraph({ company, severity }) {
         width: 90,
         height: 90,
 
-        "background-color": "#0f172a",
+        "background-color": "#ffffff",
 
-        color: "#e2e8f0",
+        color: "#1f2d34",
 
         "font-size": 11,
         "font-weight": 600,
 
         "border-width": 2,
-        "border-color": "#334155",
+        "border-color": "#bcd3d9",
 
         "text-wrap": "wrap",
         "text-max-width": 75,
@@ -273,12 +273,12 @@ function DependencyGraph({ company, severity }) {
         width: 110,
         height: 110,
 
-        "background-color": "#083344",
+        "background-color": "#d9f3f6",
 
-        "border-color": "#22d3ee",
+        "border-color": "#0e8b99",
         "border-width": 3,
 
-        color: "#cffafe",
+        color: "#0a4f58",
 
         "font-size": 12,
         "font-weight": 700,
@@ -291,8 +291,8 @@ function DependencyGraph({ company, severity }) {
     {
       selector: 'node[type="affected"]',
       style: {
-        "background-color": "#172033",
-        "border-color": "#475569",
+        "background-color": "#ffffff",
+        "border-color": "#8aa3ab",
       },
     },
 
@@ -304,9 +304,9 @@ function DependencyGraph({ company, severity }) {
       style: {
         width: 2,
 
-        "line-color": "#334155",
+        "line-color": "#bcd3d9",
 
-        "target-arrow-color": "#475569",
+        "target-arrow-color": "#8aa3ab",
         "target-arrow-shape": "triangle",
 
         "curve-style": "bezier",
@@ -322,8 +322,8 @@ function DependencyGraph({ company, severity }) {
       selector: 'edge[strength >= 0.65]',
       style: {
         width: 4,
-        "line-color": "#22d3ee",
-        "target-arrow-color": "#22d3ee",
+        "line-color": "#0e8b99",
+        "target-arrow-color": "#0e8b99",
       },
     },
 
@@ -334,8 +334,8 @@ function DependencyGraph({ company, severity }) {
       selector: 'edge[strength >= 0.4][strength < 0.65]',
       style: {
         width: 3,
-        "line-color": "#38bdf8",
-        "target-arrow-color": "#38bdf8",
+        "line-color": "#4f46e5",
+        "target-arrow-color": "#4f46e5",
       },
     },
 
@@ -345,9 +345,9 @@ function DependencyGraph({ company, severity }) {
     {
       selector: "node:selected",
       style: {
-        "border-color": "#67e8f9",
+        "border-color": "#4f46e5",
         "border-width": 4,
-        "overlay-color": "#22d3ee",
+        "overlay-color": "#0e8b99",
         "overlay-opacity": 0.08,
       },
     },

@@ -1,7 +1,37 @@
 @import "tailwindcss";
 
+/* Karat-inspired light palette: remaps the Tailwind colours already used in the app */
+@theme {
+  /* surfaces (dark -> light) */
+  --color-slate-950: #f0fbfc;  /* page background (pale mint) */
+  --color-slate-900: #ffffff;  /* cards */
+  --color-slate-800: #d5e6ea;  /* borders */
+  --color-slate-700: #bcd3d9;
+  --color-slate-600: #8aa3ab;
+  --color-slate-500: #5f7880;  /* muted text */
+  --color-slate-400: #4a5f67;  /* body text */
+  --color-slate-300: #33454d;
+  --color-slate-200: #1f2d34;
+  --color-white:     #17232a;  /* headings (charcoal) */
+
+  /* brand teal (Karat "Request demo") */
+  --color-cyan-300: #0a6f7b;
+  --color-cyan-400: #0e8b99;
+  --color-cyan-500: #0b7a87;
+
+  /* indigo accent (Karat primary CTA) */
+  --color-sky-300: #4338ca;
+  --color-sky-400: #4f46e5;
+
+  /* status colours readable on light backgrounds */
+  --color-emerald-400: #059669;
+  --color-red-300: #dc2626;
+  --color-red-400: #dc2626;
+  --color-amber-300: #b45309;
+}
+
 html {
-  background: #020617;
+  background: #f0fbfc;
 }
 
 body {
@@ -9,4 +39,19 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+
+/* Motion used on the home page */
+@keyframes mm-ring { 0% { transform: scale(.25); opacity: .55 } 100% { transform: scale(1.15); opacity: 0 } }
+@keyframes mm-node { 0%, 18% { fill: #fff } 28%, 62% { fill: #ffe0b8 } 80%, 100% { fill: #fff } }
+@keyframes mm-pulse { 0% { transform: scale(1); opacity: .6 } 100% { transform: scale(2.3); opacity: 0 } }
+@keyframes mm-marquee { to { transform: translateX(-50%) } }
+.mm-ring { transform-box: fill-box; transform-origin: center; animation: mm-ring 4.8s ease-out infinite }
+.mm-node { animation: mm-node 4.8s ease-in-out infinite }
+.mm-pulse { transform-box: fill-box; transform-origin: center; animation: mm-pulse 1.8s ease-out infinite }
+.mm-marquee { animation: mm-marquee 30s linear infinite }
+.mm-marquee:hover { animation-play-state: paused }
+@media (prefers-reduced-motion: reduce) {
+  .mm-ring, .mm-node, .mm-pulse, .mm-marquee { animation: none }
 }
