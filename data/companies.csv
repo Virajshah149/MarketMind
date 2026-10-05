@@ -1,6 +1,51 @@
 company_id,company_name,legal_name,ticker,exchange,sector,industry
-CMP001,Tata Steel,Tata Steel Limited,TATASTEEL,NSE,Metals,Steel
-CMP002,Bharat Forge,Bharat Forge Limited,BHARATFORG,NSE,Automobile Components,Auto Components
-CMP003,Maruti Suzuki,Maruti Suzuki India Limited,MARUTI,NSE,Automobile,Passenger Vehicles
-CMP004,Reliance Industries,Reliance Industries Limited,RELIANCE,NSE,Energy,Conglomerate
-CMP005,Tata Motors,Tata Motors Limited,TATAMOTORS,BSEM,Automobile,Automobiles
+CMP001,Adani Enterprises,Adani Enterprises Limited,ADANIENT,NSE,Conglomerate,Diversified
+CMP002,Adani Ports,Adani Ports and Special Economic Zone Limited,ADANIPORTS,NSE,Services,Ports
+CMP003,Apollo Hospitals,Apollo Hospitals Enterprise Limited,APOLLOHOSP,NSE,Healthcare,Hospitals
+CMP004,Asian Paints,Asian Paints Limited,ASIANPAINT,NSE,Consumer Durables,Paints
+CMP005,Axis Bank,Axis Bank Limited,AXISBANK,NSE,Financial Services,Banks
+CMP006,Bajaj Auto,Bajaj Auto Limited,BAJAJ-AUTO,NSE,Automobile and Auto Components,Two Wheelers
+CMP007,Bajaj Finserv,Bajaj Finserv Limited,BAJAJFINSV,NSE,Financial Services,Diversified Financial Services
+CMP008,Bajaj Finance,Bajaj Finance Limited,BAJFINANCE,NSE,Financial Services,Finance
+CMP009,Bharat Electronics,Bharat Electronics Limited,BEL,NSE,Capital Goods,Defence Electronics
+CMP010,Bharti Airtel,Bharti Airtel Limited,BHARTIARTL,NSE,Telecommunication,Telecom Services
+CMP011,Cipla,Cipla Limited,CIPLA,NSE,Healthcare,Pharmaceuticals
+CMP012,Coal India,Coal India Limited,COALINDIA,NSE,Oil Gas and Consumable Fuels,Coal
+CMP013,Dr Reddy's Laboratories,Dr. Reddy's Laboratories Limited,DRREDDY,NSE,Healthcare,Pharmaceuticals
+CMP014,Eicher Motors,Eicher Motors Limited,EICHERMOT,NSE,Automobile and Auto Components,Two Wheelers
+CMP015,Eternal,Eternal Limited,ETERNAL,NSE,Consumer Services,Internet Services
+CMP016,Grasim Industries,Grasim Industries Limited,GRASIM,NSE,Construction Materials,Diversified
+CMP017,HCL Technologies,HCL Technologies Limited,HCLTECH,NSE,Information Technology,IT Services
+CMP018,HDFC Bank,HDFC Bank Limited,HDFCBANK,NSE,Financial Services,Banks
+CMP019,HDFC Life Insurance,HDFC Life Insurance Company Limited,HDFCLIFE,NSE,Financial Services,Life Insurance
+CMP020,Hero MotoCorp,Hero MotoCorp Limited,HEROMOTOCO,NSE,Automobile and Auto Components,Two Wheelers
+CMP021,Hindalco Industries,Hindalco Industries Limited,HINDALCO,NSE,Metals and Mining,Aluminium
+CMP022,Hindustan Unilever,Hindustan Unilever Limited,HINDUNILVR,NSE,FMCG,Household and Personal Products
+CMP023,ICICI Bank,ICICI Bank Limited,ICICIBANK,NSE,Financial Services,Banks
+CMP024,IndusInd Bank,IndusInd Bank Limited,INDUSINDBK,NSE,Financial Services,Banks
+CMP025,Infosys,Infosys Limited,INFY,NSE,Information Technology,IT Services
+CMP026,ITC,ITC Limited,ITC,NSE,FMCG,Diversified FMCG
+CMP027,Jio Financial Services,Jio Financial Services Limited,JIOFIN,NSE,Financial Services,Financial Services
+CMP028,JSW Steel,JSW Steel Limited,JSWSTEEL,NSE,Metals and Mining,Steel
+CMP029,Kotak Mahindra Bank,Kotak Mahindra Bank Limited,KOTAKBANK,NSE,Financial Services,Banks
+CMP030,Larsen and Toubro,Larsen & Toubro Limited,LT,NSE,Construction,Engineering and Construction
+CMP031,Maruti Suzuki,Maruti Suzuki India Limited,MARUTI,NSE,Automobile and Auto Components,Passenger Vehicles
+CMP032,Mahindra and Mahindra,Mahindra & Mahindra Limited,M&M,NSE,Automobile and Auto Components,Automobiles
+CMP033,Nestle India,Nestle India Limited,NESTLEIND,NSE,FMCG,Food Products
+CMP034,NTPC,NTPC Limited,NTPC,NSE,Power,Power Generation
+CMP035,ONGC,Oil and Natural Gas Corporation Limited,ONGC,NSE,Oil Gas and Consumable Fuels,Oil and Gas
+CMP036,Power Grid Corporation,Power Grid Corporation of India Limited,POWERGRID,NSE,Power,Power Transmission
+CMP037,Reliance Industries,Reliance Industries Limited,RELIANCE,NSE,Oil Gas and Consumable Fuels,Integrated Oil and Gas
+CMP038,SBI Life Insurance,SBI Life Insurance Company Limited,SBILIFE,NSE,Financial Services,Life Insurance
+CMP039,State Bank of India,State Bank of India,SBIN,NSE,Financial Services,Banks
+CMP040,Shriram Finance,Shriram Finance Limited,SHRIRAMFIN,NSE,Financial Services,Finance
+CMP041,Sun Pharmaceutical Industries,Sun Pharmaceutical Industries Limited,SUNPHARMA,NSE,Healthcare,Pharmaceuticals
+CMP042,Tata Consumer Products,Tata Consumer Products Limited,TATACONSUM,NSE,FMCG,Food Products
+CMP043,Tata Motors,Tata Motors Limited,TATAMOTORS,NSE,Automobile and Auto Components,Automobiles
+CMP044,Tata Steel,Tata Steel Limited,TATASTEEL,NSE,Metals and Mining,Steel
+CMP045,Tata Consultancy Services,Tata Consultancy Services Limited,TCS,NSE,Information Technology,IT Services
+CMP046,Tech Mahindra,Tech Mahindra Limited,TECHM,NSE,Information Technology,IT Services
+CMP047,Titan Company,Titan Company Limited,TITAN,NSE,Consumer Durables,Jewellery and Watches
+CMP048,Trent,Trent Limited,TRENT,NSE,Consumer Services,Retail
+CMP049,UltraTech Cement,UltraTech Cement Limited,ULTRACEMCO,NSE,Construction Materials,Cement
+CMP050,Wipro,Wipro Limited,WIPRO,NSE,Information Technology,IT Services

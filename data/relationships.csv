@@ -1,0 +1,13 @@
+source_company_id,target_company_id,relationship_type,strength,dependency_percentage,commodity,evidence_text,evidence_source,confidence_score
+CMP044,CMP043,supplier,0.95,,Automotive Steel,Tata Steel supplies automotive steel products and identifies Tata Motors among its automotive customer relationships.,Tata Steel Automotive Products and Solutions,0.98
+CMP044,CMP031,supplier,0.90,,Automotive Steel,Tata Steel identifies Maruti Suzuki among its automotive customer relationships.,Tata Steel Automotive Products and Solutions,0.95
+CMP044,CMP006,supplier,0.85,,Automotive Steel,Tata Steel identifies Bajaj Auto among its automotive customer relationships.,Tata Steel Automotive Products and Solutions,0.90
+CMP044,CMP020,supplier,0.85,,Automotive Steel,Tata Steel identifies Hero MotoCorp among its automotive relationships.,Tata Steel Automotive Products and Solutions,0.90
+CMP044,CMP032,supplier,0.85,,Automotive Steel,Tata Steel identifies Mahindra and Mahindra among its automotive relationships.,Tata Steel Automotive Products and Solutions,0.90
+CMP044,CMP030,supplier,0.70,,Steel,Tata Steel reports serving engineering goods and infrastructure-related markets including L&T and other infrastructure customers.,Tata Steel Integrated Report,0.80
+CMP044,CMP047,supplier,0.60,,Steel,Tata Steel serves engineering and consumer-facing industrial markets where steel products are used across downstream applications.,Tata Steel Integrated Report,0.70
+CMP044,CMP049,supplier,0.75,,Steel,Tata Steel serves construction and infrastructure markets with steel products used across construction applications.,Tata Steel Integrated Report,0.75
+CMP021,CMP032,supplier,0.65,,Aluminium,Aluminium is identified as a key raw material/input in Mahindra and Mahindra's automotive and manufacturing operations.,Mahindra Integrated Annual Report 2025-26,0.75
+CMP021,CMP031,supplier,0.65,,Aluminium,Aluminium is a material input relevant to automotive manufacturing and Hindalco is an Indian aluminium producer within the NIFTY 50 universe.,Mahindra Integrated Annual Report 2025-26 and company disclosures,0.70
+CMP028,CMP032,supplier,0.65,,Steel,Steel is identified as a key raw material in Mahindra and Mahindra's manufacturing operations and JSW Steel is a major Indian steel producer.,Mahindra Integrated Annual Report 2025-26,0.70
+CMP021,CMP043,supplier,0.65,,Aluminium,Aluminium is a material input used in automotive manufacturing and Hindalco operates in aluminium production.,Mahindra Integrated Annual Report 2025-26,0.70

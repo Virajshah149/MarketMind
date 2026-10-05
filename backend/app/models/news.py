@@ -39,7 +39,6 @@ class News(Base):
         nullable=True,
     )
 
-    # Filled by LLM later
     company_id: Mapped[str | None] = mapped_column(
         String(20),
         nullable=True,
@@ -88,6 +87,36 @@ class News(Base):
         default="automatic",
         nullable=False,
     )
+
+    # ========================================================
+    # NEWS-DRIVEN RELATIONSHIP CHANGE
+    # ========================================================
+
+    relationship_change: Mapped[str] = mapped_column(
+        String(20),
+        default="none",
+        nullable=False,
+    )
+
+    related_company_id: Mapped[str | None] = mapped_column(
+        String(20),
+        nullable=True,
+    )
+
+    relationship_type: Mapped[str | None] = mapped_column(
+        String(50),
+        nullable=True,
+    )
+
+    relationship_change_strength: Mapped[float] = mapped_column(
+        Float,
+        default=0.0,
+        nullable=False,
+    )
+
+    # ========================================================
+    # TIMESTAMPS
+    # ========================================================
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime,

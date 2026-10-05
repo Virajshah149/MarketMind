@@ -7,7 +7,7 @@ from app.services.company_matcher import find_company_mentions
 from app.services.llm_service import analyze_news_batch
 
 
-MAX_CONTENT_CHARS = 2500
+MAX_CONTENT_CHARS = 1200
 
 
 NOISE_PHRASES = [

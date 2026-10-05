@@ -4,7 +4,7 @@ from google import genai
 from google.genai.errors import ClientError
 
 from app.core.config import settings
-from app.schemas.news_analysis import BatchNewsAnalysis
+from app.schemas.news_analysis import BatchNewsAnalysis, NewsAnalysis
 
 
 client = genai.Client(
@@ -12,13 +12,77 @@ client = genai.Client(
 )
 
 
-def analyze_news_batch(articles: list[dict]) -> BatchNewsAnalysis:
+def mock_analyze_news(article: dict) -> NewsAnalysis:
     """
-    Analyze multiple news articles in ONE Gemini request.
+    Simple fallback when Gemini is unavailable.
+
+    This is NOT AI reasoning.
+    It only creates a safe placeholder analysis so that
+    the rest of the supply-chain pipeline can be tested.
+    """
+
+    companies_text = article.get("companies", "")
+
+    company_id = None
+
+    if companies_text:
+        first_line = companies_text.splitlines()[0]
+
+        if "|" in first_line:
+            company_id = first_line.split("|")[0].strip()
+
+    title = article["title"].lower()
+
+    if any(
+        word in title
+        for word in [
+            "deal",
+            "pact",
+            "agreement",
+            "contract",
+            "project",
+            "expansion",
+        ]
+    ):
+        event_type = "business_development"
+    elif any(
+        word in title
+        for word in [
+            "award",
+            "honoured",
+            "honored",
+            "recognition",
+        ]
+    ):
+        event_type = "award_recognition"
+    else:
+        event_type = "company_event"
+
+    return NewsAnalysis(
+        news_id=article["news_id"],
+        company_id=company_id,
+        event_type=event_type,
+        sentiment="neutral",
+        severity=0.3,
+        confidence=0.3,
+        summary="Fallback analysis used because Gemini was unavailable.",
+    )
+
+
+def analyze_news_batch(
+    articles: list[dict],
+) -> BatchNewsAnalysis:
+    """
+    Try Gemini first.
+
+    If Gemini fails for any reason, automatically use
+    the mock fallback so the rest of the pipeline can continue.
     """
 
     if not articles:
-        return BatchNewsAnalysis(analyses=[])
+        return BatchNewsAnalysis(
+            analyses=[]
+        )
 
     article_blocks = []
 
@@ -39,40 +103,36 @@ POSSIBLE COMPANIES:
         )
 
     prompt = f"""
-You are a financial news classification system.
+Classify these financial news articles.
 
-Analyze the following news articles.
-
-Your job is ONLY to classify each article.
-
-Do NOT:
-- calculate supply-chain impact
-- calculate dependency impact
-- predict stock prices
-- invent facts
-- infer relationships between companies
-
-For every article return exactly one analysis.
+For each article return:
+- news_id
+- company_id: directly affected supported company, else null
+- event_type
+- sentiment: positive, negative, or neutral
+- severity: 0-1
+- confidence: 0-1
+- summary: one short sentence
+- relationship_change: none, create, strengthen, weaken, or remove
+- related_company_id: other supported company, else null
+- relationship_type: supplier, customer, partner, contract, etc., else null
+- relationship_change_strength: 0-1
 
 Rules:
-- news_id must match the supplied NEWS ID.
-- company_id must be one of the supplied possible company IDs or null.
-- Select the company directly affected by the event.
-- event_type should describe the actual event.
-- sentiment must be positive, negative, or neutral.
-- severity must be between 0 and 1.
-- confidence must be between 0 and 1.
-- summary must be one short sentence.
-
-If the article is only market commentary:
-- event_type = "market_commentary"
-- sentiment = "neutral"
-- severity = 0
-- confidence = 1
-- company_id = null
+- Use only information in the article.
+- Do not invent companies or relationships.
+- Do not calculate supply-chain impact.
+- Do not predict stock prices.
+- "create" = new business relationship.
+- "strengthen" = existing relationship becomes stronger.
+- "weaken" = existing relationship becomes weaker.
+- "remove" = relationship explicitly ends.
+- Use "none" when no relationship changes.
+- For market commentary with no real company event:
+  company_id=null, event_type="market_commentary",
+  sentiment="neutral", severity=0, relationship_change="none".
 
 ARTICLES:
-
 {"".join(article_blocks)}
 """
 
@@ -86,31 +146,27 @@ ARTICLES:
             },
         )
 
-    except ClientError as error:
-
-        # Gemini quota exceeded
-        if error.code == 429:
+        if not response.text:
             raise RuntimeError(
-                "Gemini quota exceeded. "
-                "Switch LLM_PROVIDER to mock mode or wait for quota reset."
-            ) from error
+                "Gemini returned an empty response."
+            )
 
-        raise
-
-    if not response.text:
-        raise RuntimeError(
-            "Gemini returned an empty response."
-        )
-
-    try:
         data = json.loads(response.text)
 
-    except json.JSONDecodeError as error:
-        raise RuntimeError(
-            "Gemini returned invalid JSON."
-        ) from error
+        return BatchNewsAnalysis.model_validate(data)
 
-    return BatchNewsAnalysis.model_validate(data)
+    except Exception as error:
+        print(
+            f"Gemini unavailable. Using mock fallback. "
+            f"Reason: {error}"
+        )
+
+        return BatchNewsAnalysis(
+            analyses=[
+                mock_analyze_news(article)
+                for article in articles
+            ]
+        )
 
 
 def analyze_news(
@@ -119,7 +175,7 @@ def analyze_news(
     companies: list[dict],
 ):
     """
-    Analyze one article using the same batch pipeline.
+    Analyze one article using the batch pipeline.
     """
 
     article = {
@@ -136,11 +192,13 @@ def analyze_news(
         ),
     }
 
-    result = analyze_news_batch([article])
+    result = analyze_news_batch(
+        [article]
+    )
 
     if not result.analyses:
         raise RuntimeError(
-            "Gemini returned no analysis."
+            "No analysis returned."
         )
 
     return result.analyses[0]
