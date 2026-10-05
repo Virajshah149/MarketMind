@@ -1,5 +1,6 @@
 import { useState } from "react"
 import historicalEvents from "../data/historicalEvents"
+import MovementChart from "../components/MovementChart"
 
 function History() {
   const [selectedEvent, setSelectedEvent] = useState(null)
@@ -434,6 +435,8 @@ function History() {
             data stored for this demonstration.
           </p>
         </div>
+
+        <MovementChart data={selectedEvent.propagation} />
 
         <div className="mt-6 overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/70">
 

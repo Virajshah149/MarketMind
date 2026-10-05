@@ -3,6 +3,7 @@ import mockCompanies from "../data/mockCompanies"
 
 function CompanySearch({ onCompanySelect }) {
   const [search, setSearch] = useState("")
+  const [open, setOpen] = useState(false)
 
   const filteredCompanies = mockCompanies.filter((company) =>
     company.company_name.toLowerCase().includes(search.toLowerCase()) ||
@@ -23,7 +24,10 @@ function CompanySearch({ onCompanySelect }) {
         <input
           type="text"
           value={search}
-          onChange={(event) => setSearch(event.target.value)}
+          onChange={(event) => {
+            setSearch(event.target.value)
+            setOpen(true)
+          }}
           placeholder="Search company, ticker, or sector..."
           className="w-full bg-transparent text-white outline-none placeholder:text-slate-500"
         />
@@ -31,7 +35,7 @@ function CompanySearch({ onCompanySelect }) {
       </div>
 
       {/* Search results */}
-      {search.length > 0 && (
+      {search.length > 0 && open && (
         <div className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl border border-slate-700 bg-slate-900 shadow-xl">
 
           {filteredCompanies.length > 0 ? (
@@ -41,6 +45,7 @@ function CompanySearch({ onCompanySelect }) {
                 onClick={() => {
                   onCompanySelect(company)
                   setSearch(company.company_name)
+                  setOpen(false)
                 }}
                 className="flex w-full items-center justify-between border-b border-slate-800 px-5 py-4 text-left transition hover:bg-slate-800"
               >
