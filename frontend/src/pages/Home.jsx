@@ -242,6 +242,38 @@ function Home({ initialCompany = null, onNavigate }) {
         )}
       </section>
 
+      {/* Look up any company */}
+      <section id="simulator" ref={simulatorRef} className="scroll-mt-16">
+        <div className="mx-auto flex max-w-7xl flex-col items-center px-6 pt-4 pb-20 text-center md:pb-24">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-cyan-400 shadow"><Icon name="search" /></div>
+          <h2 className={`${display} mt-5 text-3xl text-white md:text-4xl`}>Look up any company</h2>
+          <p className="mt-3 max-w-xl text-slate-400">Search for a company, choose a shock and see who else feels it.</p>
+
+          <div className="mt-8 w-full max-w-xl">
+            <CompanySearch onCompanySelect={handleCompanySelect} />
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
+              <span className="text-slate-500">Quick picks:</span>
+              {mockCompanies.slice(0, 4).map((c) => (
+                <button key={c.company_id} type="button" onClick={() => handleCompanySelect(c)}
+                  className="rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-slate-300 transition hover:border-cyan-400 hover:text-white">
+                  {c.company_name}
+                </button>
+              ))}
+            </div>
+
+            {selectedCompany && (
+              <div className="mt-4 rounded-xl border border-cyan-400/20 bg-slate-900 px-5 py-4 text-left">
+                <p className="text-sm text-cyan-300">Selected company</p>
+                <p className="mt-2 font-semibold text-white">{selectedCompany.company_name}</p>
+                <p className="text-sm text-slate-400">{selectedCompany.exchange}: {selectedCompany.ticker}</p>
+                <p className="mt-1 text-xs text-slate-500">{selectedCompany.sector} · {selectedCompany.industry}</p>
+              </div>
+            )}
+            {selectedCompany && <ShockConfig company={selectedCompany} onSimulate={handleSimulate} />}
+            {shockResult && <DependencyGraph company={shockResult.company} severity={shockResult.severity} />}
+          </div>
+        </div>
+      </section>
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-6 pb-20 md:pb-28">
         <h2 className={`${display} text-3xl text-white md:text-4xl`}>Questions people ask</h2>
@@ -277,38 +309,6 @@ function Home({ initialCompany = null, onNavigate }) {
         </div>
       </section>
 
-      {/* Simulator: the search bar sits at the bottom */}
-      <section id="simulator" ref={simulatorRef} className="scroll-mt-16">
-        <div className="mx-auto flex max-w-7xl flex-col items-center px-6 pt-20 pb-28 text-center md:pt-24">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-900 text-cyan-400 shadow"><Icon name="search" /></div>
-          <h2 className={`${display} mt-5 text-3xl text-white md:text-4xl`}>Look up any company</h2>
-          <p className="mt-3 max-w-xl text-slate-400">Search for a company, choose a shock and see who else feels it.</p>
-
-          <div className="mt-8 w-full max-w-xl">
-            <CompanySearch onCompanySelect={handleCompanySelect} />
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-2 text-sm">
-              <span className="text-slate-500">Quick picks:</span>
-              {mockCompanies.slice(0, 4).map((c) => (
-                <button key={c.company_id} type="button" onClick={() => handleCompanySelect(c)}
-                  className="rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-slate-300 transition hover:border-cyan-400 hover:text-white">
-                  {c.company_name}
-                </button>
-              ))}
-            </div>
-
-            {selectedCompany && (
-              <div className="mt-4 rounded-xl border border-cyan-400/20 bg-slate-900 px-5 py-4 text-left">
-                <p className="text-sm text-cyan-300">Selected company</p>
-                <p className="mt-2 font-semibold text-white">{selectedCompany.company_name}</p>
-                <p className="text-sm text-slate-400">{selectedCompany.exchange}: {selectedCompany.ticker}</p>
-                <p className="mt-1 text-xs text-slate-500">{selectedCompany.sector} · {selectedCompany.industry}</p>
-              </div>
-            )}
-            {selectedCompany && <ShockConfig company={selectedCompany} onSimulate={handleSimulate} />}
-            {shockResult && <DependencyGraph company={shockResult.company} severity={shockResult.severity} />}
-          </div>
-        </div>
-      </section>
     </main>
   )
 }
