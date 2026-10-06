@@ -55,3 +55,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .mm-ring, .mm-node, .mm-pulse, .mm-marquee { animation: none }
 }
+
+@theme {
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+}
